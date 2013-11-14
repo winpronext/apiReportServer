@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bundle minify="true" runOnBuild="true" output="vendors.js">
+  <!--The order of the <file> elements determines the order of them when bundled.-->
+  <file>/Scripts/jquery-2.0.3.js</file>
+  <file>/Scripts/jquery.signalR-2.0.0.js</file>
+  <file>/Scripts/toastr.js</file>
+  <file>/Scripts/bootstrap.js</file>
+  <file>/Scripts/angular.js</file>
+  <file>/Scripts/angular-animate.js</file>
+  <file>/Scripts/angular-resource.js</file>
+  <file>/Scripts/angular-route.js</file>
+  <file>/Scripts/angular-touch.js</file>
+</bundle>

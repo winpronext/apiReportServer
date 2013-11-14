@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bundle minify="true" runOnBuild="true" output="app.js">
+  <!--The order of the <file> elements determines the order of them when bundled.-->
+  <file>/App/http-auth-interceptor.js</file>
+  <file>/App/interceptors.js</file>
+  <file>/App/services.js</file>
+  <file>/App/resources.js</file>
+  <file>/App/directives.js</file>
+  <file>/App/controllers.js</file>
+  <file>/App/main.js</file>
+</bundle>

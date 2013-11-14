@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bundle minify="true" runOnBuild="true" output="style.css">
+  <!--The order of the <file> elements determines the order of them when bundled.-->
+  <file>/Content/site.css</file>
+  <file>/Content/bootstrap.css</file>
+  <file>/Content/toastr.css</file>
+</bundle>
