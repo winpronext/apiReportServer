@@ -2,7 +2,7 @@
 
 namespace App.Models
 {
-    public class TodoItemInitializer : DropCreateDatabaseIfModelChanges<TodoItemContext>
+    public class TodoItemInitializer : DropCreateDatabaseAlways<TodoItemContext>
     {
         protected override void Seed(TodoItemContext context)
         {
