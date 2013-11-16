@@ -21,7 +21,7 @@
                 <ul class="list-unstyled repeat-item" data-ng-repeat="todo in todoList.todoItems">
                     <li>
                         <input type="checkbox" data-ng-model="todo.isDone" data-ng-change="saveTodoItem(todo)" />
-                        <span data-ng-bind="todo.title"></span>    
+                        <span data-ng-class="{'strike':todo.isDone}" data-ng-bind="todo.title"></span>    
                         <button type="button" class="close" aria-hidden="true" data-ng-click="removeTodoItem(todoList, todo)">&times;</button>
                     </li>
                 </ul>

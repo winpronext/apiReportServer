@@ -62,11 +62,8 @@
         opacity: 1;
     }
 
-@media only screen and (max-width: 767px) {
-    .nofloat {
-        float: none;
-        padding: 10px 15px;
-    }
+.strike {
+  text-decoration: line-through;
 }
 /*!
  * Bootstrap v3.0.2 by @fat and @mdo
