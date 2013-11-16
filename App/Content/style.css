@@ -62,9 +62,17 @@
         opacity: 1;
     }
 
-.strike {
-  text-decoration: line-through;
+@media only screen and (max-width: 767px) {
+    .nofloat {
+        float: none;
+        padding: 10px 15px;
+    }
 }
+
+.strike {
+    text-decoration: line-through;
+}
+
 /*!
  * Bootstrap v3.0.2 by @fat and @mdo
  * Copyright 2013 Twitter, Inc.
