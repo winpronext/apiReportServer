@@ -8829,27 +8829,11 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
 
 })( window );
 
-///#source 1 1 /Scripts/jquery.signalR-2.0.0.js
-/* NUGET: BEGIN LICENSE TEXT
- *
- * Microsoft grants you the right to use these script files for the sole
- * purpose of either: (i) interacting through your browser with the Microsoft
- * website or online service, subject to the applicable licensing or use
- * terms; or (ii) using the files as included with a Microsoft product subject
- * to that product's license terms. Microsoft reserves all other rights to the
- * files not expressly granted by Microsoft, whether by implication, estoppel
- * or otherwise. Insofar as a script file is dual licensed under GPL,
- * Microsoft neither took the code under GPL nor distributes it thereunder but
- * under the terms set out in this paragraph. All notices and licenses
- * below are for informational purposes only.
- *
- * ASP.NET SignalR JavaScript Library v2.0.0; Copyright (C) Microsoft Corporation; https://github.com/SignalR/SignalR/blob/master/LICENSE.md
- *
- * NUGET: END LICENSE TEXT */
+///#source 1 1 /Scripts/jquery.signalR-2.0.1.js
 /* jquery.signalR.core.js */
 /*global window:false */
 /*!
- * ASP.NET SignalR JavaScript Library v2.0.0
+ * ASP.NET SignalR JavaScript Library v2.0.1
  * http://signalr.net/
  *
  * Copyright (C) Microsoft Corporation. All rights reserved.
@@ -11446,7 +11430,7 @@ if ( typeof window === "object" && typeof window.document === "object" ) {
 /*global window:false */
 /// <reference path="jquery.signalR.core.js" />
 (function ($, undefined) {
-    $.signalR.version = "2.0.0";
+    $.signalR.version = "2.0.1";
 }(window.jQuery));
 
 ///#source 1 1 /Scripts/toastr.js
@@ -37271,3 +37255,4 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
 
 
 })(window, window.angular);
+
