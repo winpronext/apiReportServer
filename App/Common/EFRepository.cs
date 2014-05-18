@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace App.Common
 {
-    public class EFRepository<TContext> : IAsyncRepository where TContext : DbContext, new()
+    public class EfRepository<TContext> : IAsyncRepository where TContext : DbContext, new()
     {
         public IQueryable<T> Query<T>() where T : class
         {
@@ -68,7 +68,7 @@ namespace App.Common
 
         protected TContext Context { get { return _context; }}
 
-        public EFRepository()
+        public EfRepository()
         {
             _context = new TContext();
         }

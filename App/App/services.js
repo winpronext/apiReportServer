@@ -84,7 +84,7 @@
     //#region $safeApply
     services.factory('$safeApply', function () {
         return function($scope, fn) {
-            var phase = $scope.$root.$$phase;
+            var phase = $scope.$root ? $scope.$root.$$phase : null;
             if (phase == '$apply' || phase == '$digest') {
                 if (fn) {
                     $scope.$eval(fn);

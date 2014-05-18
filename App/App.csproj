@@ -222,7 +222,6 @@
     </Content>
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
-    <Content Include="css\jasmine.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="index.html" />
     <Content Include="redame.txt" />
@@ -509,8 +508,6 @@
     <Content Include="Scripts\i18n\angular-locale_zh.js" />
     <Content Include="Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
-    <Content Include="Scripts\jasmine-html.js" />
-    <Content Include="Scripts\jasmine.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
@@ -548,7 +545,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\EFRepository.cs" />
+    <Compile Include="Common\EfRepository.cs" />
+    <Compile Include="Common\EntityController.cs" />
     <Compile Include="Common\IAsyncRepository.cs" />
     <Compile Include="Identity\DomanUserLoginProvider.cs" />
     <Compile Include="Identity\ILoginProvider.cs" />

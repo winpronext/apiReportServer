@@ -5,14 +5,14 @@ using System.Web.Http;
 using App.Common;
 using App.Models;
 using App.ViewModels;
-using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using log4net;
 
 namespace App.Controllers
 {
     [Authorize]
     [RoutePrefix("api/TodoList")]
-    public class TodoListController: ApiController
+    public class TodoListController: EntityController<TodoList, TodoListViewModel>
     {
         [Queryable]
         [HttpGet]
@@ -20,15 +20,12 @@ namespace App.Controllers
         {
             Log.Debug("Entering Get()");
 
-            var todoLists = await _repository.Query<TodoList>()
-                .Where(td => td.UserId == User.Identity.Name)
+            var todoLists = await Query(td => td.UserId == User.Identity.Name)
                 .ToArrayAsync();
+            
+            Log.DebugFormat("Leaving Get(): Count={0}", todoLists.Length);
 
-            var result = Mapper.Map<TodoList[], TodoListViewModel[]>(todoLists);
-
-            Log.DebugFormat("Leaving Get(): Count={0}", result.Length);
-
-            return Ok(result);
+            return Ok(todoLists);
         }
 
         [HttpGet, Route("{id:int}")]
@@ -36,7 +33,7 @@ namespace App.Controllers
         {
             Log.DebugFormat("Entering Get(id={0})", id);
 
-            var todoList = await _repository.GetAsync<TodoList>(id);
+            var todoList = await GetAsync(id);
 
             if (todoList == null)
             {
@@ -44,11 +41,9 @@ namespace App.Controllers
                 return NotFound();
             }
 
-            var result = Mapper.Map<TodoList, TodoListViewModel>(todoList);
+            Log.DebugFormat("Leaving Get(): Id={0}", todoList.Id);
 
-            Log.DebugFormat("Leaving Get(): Id={0}", result.Id);
-
-            return Ok(result);
+            return Ok(todoList);
         }
 
         [HttpPost]
@@ -62,13 +57,13 @@ namespace App.Controllers
                 return this.BadRequestError(ModelState);
             }
 
-            var todoList = Mapper.Map<TodoListViewModel, TodoList>(model);
+            var todoList = GetEntityObject(model);
             todoList.UserId = User.Identity.Name;
 
-            _repository.Add(todoList);
-            await _repository.SaveChangesAsync();
+            Repository.Add(todoList);
+            await SaveChangesAsync();
             
-            var result = Mapper.Map<TodoList, TodoListViewModel>(todoList);
+            var result = GetDataObject(todoList);
 
             Log.DebugFormat("Leaving Post(): Id={0}", result.Id);
 
@@ -81,7 +76,7 @@ namespace App.Controllers
         {
             Log.DebugFormat("Entering Todos(id={0})", id);
 
-            var todoList = await _repository.GetAsync<TodoList>(id);
+            var todoList = await Repository.GetAsync<TodoList>(id);
 
             if (todoList == null)
             {
@@ -95,15 +90,14 @@ namespace App.Controllers
                 return Unauthorized();
             }
 
-            var todos = await _repository.Query<TodoItem>()
+            var todos = await Repository.Query<TodoItem>()
                 .Where(x => x.TodoListId == id)
+                .Project().To<TodoItemViewModel>()
                 .ToArrayAsync();
 
-            var result = Mapper.Map<TodoItem[], TodoItemViewModel[]>(todos);
+            Log.DebugFormat("Leaving Todos(): Count={0}", todos.Length);
 
-            Log.DebugFormat("Leaving Todos(): Count={0}", result.Length);
-
-            return Ok(result);
+            return Ok(todos);
         }
 
         [HttpDelete, Route("{id:int}")]
@@ -111,7 +105,7 @@ namespace App.Controllers
         {
             Log.DebugFormat("Entering Delete(id={0})", id);
 
-            var todoList = _repository.Get<TodoList>(id);
+            var todoList = await Repository.GetAsync<TodoList>(id);
             if (todoList == null)
             {
                 Log.Debug("Leaving Delete(): Not found");
@@ -124,27 +118,25 @@ namespace App.Controllers
                 return Unauthorized();
             }
 
-            _repository.Remove<TodoList>(id);
-            await _repository.SaveChangesAsync();
+            Remove(id);
+            await SaveChangesAsync();
 
             Log.Debug("Leaving Delete()");
             return Ok();
         }
 
         public TodoListController(IAsyncRepository repository)
+            :base(repository)
         {
             Log.Debug("Entering TodoListController()");
-            _repository = repository;
         }
 
         protected override void Dispose(bool disposing)
         {
             Log.DebugFormat("Entering Dispose(disposing={0})", disposing);
-            _repository.Dispose();
             base.Dispose(disposing);
         }
 
-        private readonly IAsyncRepository _repository;
         private static readonly ILog Log = LogManager.GetLogger(typeof(TodoListController));
     }
 }

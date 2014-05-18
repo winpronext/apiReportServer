@@ -3,13 +3,12 @@ using System.Web.Http;
 using App.Common;
 using App.Models;
 using App.ViewModels;
-using AutoMapper;
 using log4net;
 
 namespace App.Controllers
 {
     [Authorize]
-    public class TodoItemController : ApiController
+    public class TodoItemController : EntityController<TodoItem, TodoItemViewModel>
     {
         public async Task<IHttpActionResult> Post(TodoItemViewModel model)
         {
@@ -21,24 +20,17 @@ namespace App.Controllers
                 return this.BadRequestError(ModelState);
             }
 
-            var todoList = _repository.Get<TodoList>(model.TodoListId);
-
-            if (todoList.UserId != User.Identity.Name)
+            if (!await CheckAccess(model.TodoListId))
             {
                 Log.Debug("Leaving Post(): Unauthorized");
                 return Unauthorized();
             }
 
-            var todoItem = Mapper.Map<TodoItemViewModel, TodoItem>(model);
+            model = Add(model);
+            await SaveChangesAsync();
 
-            todoList.Todos.Add(todoItem);
-
-            await _repository.SaveChangesAsync();
-
-            var entity = Mapper.Map<TodoItem, TodoItemViewModel>(todoItem);
-
-            Log.DebugFormat("Leaving Post(): Id={0}", entity.Id);
-            return Ok(entity);
+            Log.DebugFormat("Leaving Post(): Id={0}", model.Id);
+            return Ok(model);
         }
 
         public async Task<IHttpActionResult> Put(TodoItemViewModel model)
@@ -51,62 +43,63 @@ namespace App.Controllers
                 return this.BadRequestError(ModelState);
             }
 
-            var todoList = _repository.Get<TodoList>(model.TodoListId);
-            if (todoList.UserId != User.Identity.Name)
+           
+            if (!await CheckAccess(model.TodoListId))
             {
                 Log.Debug("Leaving Put(): Unauthorized");
                 return Unauthorized();
             }
 
-            var todoItem = Mapper.Map<TodoItemViewModel, TodoItem>(model);
-            _repository.Update(todoItem);
-            await _repository.SaveChangesAsync();
+            model = Update(model);
+            await SaveChangesAsync();
 
-            var entity = Mapper.Map<TodoItem, TodoItemViewModel>(todoItem);
-            
             Log.Debug("Leaving Put()");
 
-            return Ok(entity);
+            return Ok(model);
         }
 
         public async Task<IHttpActionResult> Delete(int id)
         {
             Log.DebugFormat("Entering Delete(id={0})", id);
 
-            var todoItem = _repository.Get<TodoItem>(id);
+            var todoItem = await GetAsync(id);
             if (todoItem == null)
             {
                 Log.Debug("Leaving Delete(): Not found");
                 return NotFound();
             }
 
-            if (todoItem.TodoList.UserId != User.Identity.Name)
+            if (!await CheckAccess(todoItem.TodoListId))
             {
                 Log.Debug("Leaving Delete(): Unauthorized");
                 return Unauthorized();
             }
 
-            _repository.Remove<TodoItem>(id);
-            await _repository.SaveChangesAsync();
+            Remove(id);
+            await SaveChangesAsync();
 
             Log.Debug("Leaving Delete()");
             return Ok();
         }
 
         public TodoItemController(IAsyncRepository repository)
+            :base(repository)
         {
             Log.Debug("Entering TodoItemController()");
-            _repository = repository;
         }
 
         protected override void Dispose(bool disposing)
         {
             Log.DebugFormat("Entering Dispose(disposing={0})", disposing);
-            _repository.Dispose();
             base.Dispose(disposing);
         }
 
-        private readonly IAsyncRepository _repository;
+        private async Task<bool> CheckAccess(int todoListId)
+        {
+            var todoList = await Repository.GetAsync<TodoList>(todoListId);
+            return todoList.UserId == User.Identity.Name;
+        } 
+
         private static readonly ILog Log = LogManager.GetLogger(typeof(TodoItemController));
     }
 }

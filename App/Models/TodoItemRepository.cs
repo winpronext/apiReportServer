@@ -2,7 +2,7 @@
 
 namespace App.Models
 {
-    public class TodoItemRepository : EFRepository<TodoItemContext>
+    public class TodoItemRepository : EfRepository<TodoItemContext>
     {
     }
 }
