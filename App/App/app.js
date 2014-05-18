@@ -1,4 +1,4 @@
-﻿///#source 1 1 /App/http-auth-interceptor.js
+﻿///#source 1 1 D:\Projects\angularapp\App\App\http-auth-interceptor.js
 /*Modified for cancel login*/
 
 /*global angular:true, browser:true */
@@ -119,7 +119,7 @@
         };
     }]);
 })();
-///#source 1 1 /App/interceptors.js
+///#source 1 1 D:\Projects\angularapp\App\App\interceptors.js
 (function(angular, toastr) {
     'use strict';
 
@@ -226,7 +226,7 @@
 })(angular, toastr);
 
 
-///#source 1 1 /App/services.js
+///#source 1 1 D:\Projects\angularapp\App\App\services.js
 (function (angular, $) {
     'use strict';
 
@@ -313,7 +313,7 @@
     //#region $safeApply
     services.factory('$safeApply', function () {
         return function($scope, fn) {
-            var phase = $scope.$root.$$phase;
+            var phase = $scope.$root ? $scope.$root.$$phase : null;
             if (phase == '$apply' || phase == '$digest') {
                 if (fn) {
                     $scope.$eval(fn);
@@ -367,7 +367,7 @@
     //#endregion
 
 })(window.angular, window.jQuery);
-///#source 1 1 /App/resources.js
+///#source 1 1 D:\Projects\angularapp\App\App\resources.js
 (function (angular) {
     'use strict';
 
@@ -390,7 +390,7 @@
     //#endregion
 })(window.angular);
 
-///#source 1 1 /App/directives.js
+///#source 1 1 D:\Projects\angularapp\App\App\directives.js
 (function (angular, modernizr) {
     'use strict';
 
@@ -553,7 +553,7 @@
     
 })(window.angular, Modernizr);
 
-///#source 1 1 /App/controllers.js
+///#source 1 1 D:\Projects\angularapp\App\App\controllers.js
 (function (angular) {
     'use strict';
 
@@ -714,7 +714,7 @@
     //#endregion
 
 })(window.angular);
-///#source 1 1 /App/main.js
+///#source 1 1 D:\Projects\angularapp\App\App\main.js
 /* main: startup script creates the 'app' module */
 
 (function (window, angular, toastr) {
