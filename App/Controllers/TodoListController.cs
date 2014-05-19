@@ -12,7 +12,7 @@ namespace App.Controllers
 {
     [Authorize]
     [RoutePrefix("api/TodoList")]
-    public class TodoListController: EntityController<TodoList, TodoListViewModel>
+    public class TodoListController: MapEntityController<TodoList, TodoListViewModel>
     {
         [Queryable]
         [HttpGet]

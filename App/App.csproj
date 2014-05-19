@@ -547,6 +547,7 @@
   <ItemGroup>
     <Compile Include="Common\EfRepository.cs" />
     <Compile Include="Common\EntityController.cs" />
+    <Compile Include="Common\MapEntityController.cs" />
     <Compile Include="Common\IAsyncRepository.cs" />
     <Compile Include="Identity\DomanUserLoginProvider.cs" />
     <Compile Include="Identity\ILoginProvider.cs" />

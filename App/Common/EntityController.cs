@@ -1,61 +1,42 @@
 ﻿using System;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 
 namespace App.Common
 {
-    public abstract class EntityController<TEntity, TData> : ApiController 
+    public abstract class EntityController<TEntity> : ApiController 
         where TEntity : class
-        where TData : class 
     {
-        protected IQueryable<TData> Query()
+        protected IQueryable<TEntity> Query()
         {
-            return _repository.Query<TEntity>().Project().To<TData>();
+            return _repository.Query<TEntity>();
         }
 
-        protected IQueryable<TData> Query(Expression<Func<TEntity, bool>> entityPredicate)
+        protected TEntity Get(params object[] keyValues)
         {
-            return _repository.Query<TEntity>()
-                .Where(entityPredicate)
-                .Project()
-                .To<TData>();
+            return _repository.Get<TEntity>(keyValues);
         }
 
-        protected TData Get(params object[] keyValues)
+        protected async Task<TEntity> GetAsync(params object[] keyValues)
         {
-            var entity = _repository.Get<TEntity>(keyValues);
-            return GetDataObject(entity);
+            return await _repository.GetAsync<TEntity>(keyValues);
         }
 
-        protected async Task<TData> GetAsync(params object[] keyValues)
+        protected async Task<TEntity> GetAsync(CancellationToken token, params object[] keyValues)
         {
-            var entity = await _repository.GetAsync<TEntity>(keyValues);
-            return GetDataObject(entity);
+            return await _repository.GetAsync<TEntity>(token, keyValues);
         }
 
-        protected async Task<TData> GetAsync(CancellationToken token, params object[] keyValues)
+        protected TEntity Add(TEntity entity)
         {
-            var entity = await _repository.GetAsync<TEntity>(token, keyValues);
-            return GetDataObject(entity);
+            return _repository.Add(entity);
         }
 
-        protected TData Add(TData data)
+        protected TEntity Update(TEntity entity)
         {
-            var entity = GetEntityObject(data);
-            entity = _repository.Add(entity);
-            return GetDataObject(entity);
-        }
-
-        protected TData Update(TData data)
-        {
-            var entity = GetEntityObject(data);
-            entity = _repository.Update(entity);
-            return GetDataObject(entity);
+            return _repository.Update(entity);
         }
 
         protected void Remove(params object[] keyValues)
@@ -81,16 +62,6 @@ namespace App.Common
         protected IAsyncRepository Repository
         {
             get { return _repository; }
-        }
-
-        protected TData GetDataObject(TEntity entity)
-        {
-            return Mapper.Map<TEntity, TData>(entity);
-        }
-
-        protected TEntity GetEntityObject(TData data)
-        {
-            return Mapper.Map<TData, TEntity>(data);
         }
 
         protected EntityController(IAsyncRepository repository)

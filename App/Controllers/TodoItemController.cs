@@ -8,7 +8,7 @@ using log4net;
 namespace App.Controllers
 {
     [Authorize]
-    public class TodoItemController : EntityController<TodoItem, TodoItemViewModel>
+    public class TodoItemController : MapEntityController<TodoItem, TodoItemViewModel>
     {
         public async Task<IHttpActionResult> Post(TodoItemViewModel model)
         {
