@@ -26,8 +26,7 @@ namespace App.Controllers
                 return Unauthorized();
             }
 
-            model = Add(model);
-            await SaveChangesAsync();
+            model = await Add(model);
 
             Log.DebugFormat("Leaving Post(): Id={0}", model.Id);
             return Ok(model);
@@ -50,8 +49,7 @@ namespace App.Controllers
                 return Unauthorized();
             }
 
-            model = Update(model);
-            await SaveChangesAsync();
+            model = await Update(model);
 
             Log.Debug("Leaving Put()");
 
@@ -75,8 +73,7 @@ namespace App.Controllers
                 return Unauthorized();
             }
 
-            Remove(id);
-            await SaveChangesAsync();
+            await Remove(id);
 
             Log.Debug("Leaving Delete()");
             return Ok();

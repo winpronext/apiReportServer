@@ -44,23 +44,26 @@ namespace App.Common
             return GetDataObject(entity);
         }
 
-        protected TData Add(TData data)
+        protected async Task<TData> Add(TData data)
         {
             var entity = GetEntityObject(data);
             entity = _repository.Add(entity);
+            await _repository.SaveChangesAsync();
             return GetDataObject(entity);
         }
 
-        protected TData Update(TData data)
+        protected async Task<TData> Update(TData data)
         {
             var entity = GetEntityObject(data);
             entity = _repository.Update(entity);
+            await _repository.SaveChangesAsync();
             return GetDataObject(entity);
         }
 
-        protected void Remove(params object[] keyValues)
+        protected async Task Remove(params object[] keyValues)
         {
             _repository.Remove<TEntity>(keyValues);
+            await _repository.SaveChangesAsync();
         }
 
         protected void SaveChanges()

@@ -118,8 +118,7 @@ namespace App.Controllers
                 return Unauthorized();
             }
 
-            Remove(id);
-            await SaveChangesAsync();
+            await Remove(id);
 
             Log.Debug("Leaving Delete()");
             return Ok();

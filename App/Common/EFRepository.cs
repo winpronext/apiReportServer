@@ -29,8 +29,7 @@ namespace App.Common
 
         public T Add<T>(T entity) where T : class
         {
-            Context.Set<T>().Add(entity);
-            return entity;
+            return Context.Set<T>().Add(entity);
         }
 
         public T Update<T>(T entity) where T : class
