@@ -2,7 +2,7 @@
 {
     public class LoginAccessViewModel
     {
-        public string UserName { get; set; }
+        public AccountProfileViewModel User { get; set; }
         public string AccessToken { get; set; }
     }
 }
