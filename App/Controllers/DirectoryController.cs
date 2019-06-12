@@ -11,6 +11,7 @@ using App.Plugins;
 using System.Data;
 using System.Text;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace App.Controllers
 {
@@ -73,7 +74,41 @@ namespace App.Controllers
                     dirs.Add(new DirectoryViewModel { id = Convert.ToInt32(row[0]), url = row[1].ToString(), isReport = Convert.ToInt32(row[2]), reportId = string.IsNullOrEmpty(row[3].ToString()) ? 0 : Convert.ToInt32(row[3]) });
                 }
             }
+            dirs = dirs.OrderBy(f => f.url).OrderBy(f => f.isReport).ToList();
             return Ok(dirs);
+        }
+        [Authorize]
+        [HttpPost, Route("DeleteDirectory")]
+        public IHttpActionResult DeleteDirectory(DirectoryViewModel directory)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.BadRequestError(ModelState);
+            }
+            DataSet data = new DataSet();
+            if (directory.isReport == 1)
+            {
+                data = DBConnection.GetQuery("delete [ReportServer].[dbo].[Urls] where id = " + directory.id);
+                data = DBConnection.GetQuery("delete [ReportServer].[dbo].[Report] where id = " + directory.reportId);
+            }
+            else
+            {
+                data = DBConnection.GetQuery(@"SELECT [id]
+                                                          ,[url]
+                                                          ,[isReport]
+                                                          ,[reportId]
+                                                      FROM [ReportServer].[dbo].[Urls] where [url] like '" + directory.url + "/%'");
+                foreach (DataRow row in data.Tables[0].Rows)
+                {
+                    data = DBConnection.GetQuery("delete [ReportServer].[dbo].[Urls] where id = " + row[0]);
+                    if (row[3].ToString() != "")
+                    {
+                        data = DBConnection.GetQuery("delete [ReportServer].[dbo].[Report] where id = " + row[3]);
+                    }
+                }
+                data = DBConnection.GetQuery("delete [ReportServer].[dbo].[Urls] where id = " + directory.id);
+            }
+            return Ok();
         }
     }
 }
