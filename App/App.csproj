@@ -547,6 +547,7 @@
     <Compile Include="Common\EntityController.cs" />
     <Compile Include="Common\MapEntityController.cs" />
     <Compile Include="Common\IAsyncRepository.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\DirectoryController.cs" />
     <Compile Include="Identity\DomanUserLoginProvider.cs" />
     <Compile Include="Identity\ILoginProvider.cs" />
@@ -556,8 +557,6 @@
     <Compile Include="App_Start\Startup.Composition.cs" />
     <Compile Include="App_Start\Startup.Mapper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\TodoItemController.cs" />
-    <Compile Include="Controllers\TodoListController.cs" />
     <Compile Include="Identity\LocalUserLoginProvider.cs" />
     <Compile Include="Models\TodoItem.cs" />
     <Compile Include="Models\TodoItemContext.cs" />
@@ -569,6 +568,9 @@
     <Compile Include="Plugins\Logging.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ReportAdd.cs" />
+    <Compile Include="ViewModels\SourceViewModel.cs" />
+    <Compile Include="ViewModels\TypeSourceViewModel.cs" />
     <Compile Include="ViewModels\DirectoryViewModel.cs" />
     <Compile Include="ViewModels\DirectoryAddModel.cs" />
     <Compile Include="ViewModels\AnswerViewModel.cs" />

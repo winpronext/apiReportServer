@@ -69,7 +69,7 @@ namespace App.Controllers
                 int i = row[1].ToString().Split('/').Length;
                 int j = directory.Split('/').Length;
                 if (i == j+1)
-                {
+                { 
                     dirs.Add(new DirectoryViewModel { id = Convert.ToInt32(row[0]), url = row[1].ToString(), isReport = Convert.ToInt32(row[2]), reportId = string.IsNullOrEmpty(row[3].ToString()) ? 0 : Convert.ToInt32(row[3]) });
                 }
             }

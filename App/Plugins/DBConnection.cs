@@ -32,5 +32,29 @@ namespace App.Plugins
                 return null;
             }
         }
+        public static DataSet GetQuery(string query, string connection)
+        {
+            DataSet dataTable = new DataSet();
+            try
+            {
+                string connString = connection;
+
+                SqlConnection conn = new SqlConnection(connString);
+                SqlCommand cmd = new SqlCommand(query, conn);
+                conn.Open();
+
+                // create data adapter
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                // this will query your database and return the result to your datatable
+                da.Fill(dataTable);
+                conn.Close();
+                da.Dispose();
+                return dataTable;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }
