@@ -568,6 +568,7 @@
     <Compile Include="Plugins\Logging.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ReportUpdate.cs" />
     <Compile Include="ViewModels\Report.cs" />
     <Compile Include="ViewModels\ReportAdd.cs" />
     <Compile Include="ViewModels\SourceViewModel.cs" />

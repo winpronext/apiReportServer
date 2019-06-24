@@ -194,5 +194,25 @@ namespace App.Controllers
             report.sourceType = new TypeSourceViewModel { id = Convert.ToInt32(data.Tables[0].Rows[0][0]), DBType = data.Tables[0].Rows[0][1].ToString() };
             return Ok(report);
         }
+        [Authorize]
+        [HttpPost, Route("UpdateReport")]
+        public IHttpActionResult UpdateReport(ReportUpdate report)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.BadRequestError(ModelState);
+            }
+            DataSet data = DBConnection.GetQuery(@"update [ReportServer].[dbo].[Report] set [query] = '"+report.query.Replace("'","''")+"', [sourceid] = "+report.source.id+" where [id] = "+report.id);
+            if (data == null)
+            {
+                return BadRequest("Not connect to DB");
+            }
+            data = DBConnection.GetQuery(@"update [ReportServer].[dbo].[Urls] set [url] = '"+report.reportName+"' where [reportId] =" + report.id);
+            if (data == null)
+            {
+                return BadRequest("Not connect to DB");
+            }
+            return Ok();
+        }
     }
 }
