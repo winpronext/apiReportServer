@@ -547,6 +547,7 @@
     <Compile Include="Common\EntityController.cs" />
     <Compile Include="Common\MapEntityController.cs" />
     <Compile Include="Common\IAsyncRepository.cs" />
+    <Compile Include="Controllers\SourceController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\DirectoryController.cs" />
     <Compile Include="Identity\DomanUserLoginProvider.cs" />
@@ -571,6 +572,8 @@
     <Compile Include="ViewModels\ReportUpdate.cs" />
     <Compile Include="ViewModels\Report.cs" />
     <Compile Include="ViewModels\ReportAdd.cs" />
+    <Compile Include="ViewModels\SourceAllCreateViewModel.cs" />
+    <Compile Include="ViewModels\SourceAllViewModel.cs" />
     <Compile Include="ViewModels\SourceViewModel.cs" />
     <Compile Include="ViewModels\TypeSourceViewModel.cs" />
     <Compile Include="ViewModels\DirectoryViewModel.cs" />
